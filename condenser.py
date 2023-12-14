@@ -2,7 +2,7 @@ from math import log
 
 
 class Condenser:
-    def __init__(self, length, inner_radius, outer_radius, voltage):
+    def __init__(self, length, inner_radius, outer_radius, voltage = 0):
         self.Length = length
         self.InnerRadius = inner_radius
         self.OuterRadius = outer_radius
@@ -10,4 +10,4 @@ class Condenser:
 
     def field_y_component(self, y):
         return self.Voltage / (log(self.OuterRadius / self.InnerRadius) * (y + self.InnerRadius))
-    # E = U / (ln(R / r) * dist)
+    # E_r = U / (ln(R / r) * dist)
