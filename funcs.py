@@ -27,7 +27,7 @@ def evaluate_all_values(electron, condenser, time):
     y_t = []
     while electron.X < condenser.Length or electron.Y > 0:
         y_x.append((electron.X * 100, electron.Y * 100))
-        vy_t.append((time, electron.VelocityByY * 100))
+        vy_t.append((time, electron.VelocityByY))
         dvy = acceleration_by_y(electron, condenser)
         ay_t.append((time, dvy))
         y_t.append((time, electron.Y * 100))
@@ -43,7 +43,7 @@ def format_number(number):
 
 
 def add_graph(values, title, xlabel, ylabel):
-    fig = pt.figure()
+    pt.figure()
     pt.title(title)
     pt.xlabel(xlabel)
     pt.ylabel(ylabel)

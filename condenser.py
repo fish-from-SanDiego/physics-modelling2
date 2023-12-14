@@ -2,7 +2,7 @@ from math import log
 
 
 class Condenser:
-    def __init__(self, length, inner_radius, outer_radius, voltage = 0):
+    def __init__(self, length, inner_radius, outer_radius, voltage=0):
         self.Length = length
         self.InnerRadius = inner_radius
         self.OuterRadius = outer_radius

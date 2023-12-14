@@ -5,8 +5,10 @@ from condenser import Condenser
 from electron import Electron
 import matplotlib.pyplot as pt
 
-params = {'axes.labelsize': 'large',
-          'axes.titlesize': 'large',
+params = {'axes.labelsize': 'x-large',
+          'axes.titlesize': 'x-large',
+          'xtick.labelsize': 'large',
+          'ytick.labelsize': 'large',
           "figure.autolayout": True,
           "figure.figsize": [7.00, 3.50],
           'text.usetex': True,
@@ -38,24 +40,9 @@ print("Минимальное напряжение", voltage, "В")
 print("Время полета", time, "с")
 print("Конечная скорость", funcs.format_number((electron.VelocityByY ** 2 + electron.VelocityByX ** 2) ** 0.5), "м/с")
 
-fig = pt.figure()
+funcs.add_graph(y_x, r' $y(x)$', '$x$, $cm$', '$y$, $cm$')
+funcs.add_graph(vy_t, r' $v_y(t)$', '$t$, $s$', r'$v_y(t), \frac{m}{s}$')
+funcs.add_graph(ay_t, r' $a_y(t)$', '$t$, $s$', r'$a_y(t), \frac{m}{s^2}$')
+funcs.add_graph(y_t, r' $y(t)$', '$t$, $s$', r'$y(t), cm$')
 
-funcs.add_graph(y_x, r'Зависимость $y(x)$', '$x$, см', '$y$, см')
-funcs.add_graph(vy_t, r'Зависимость $v_y(t)$', '$t$, с', r'$v_y(t), \frac{\text{см}}{\text{с}}$')
-
-# pt.title('Зависимость ускорения от времени')
-# pt.xlabel('Время, c')
-# pt.ylabel('Ускорение, м/c^2')
-# pt.grid()
-# pt.plot([i[0] for i in ay_t], [i[1] for i in ay_t])
-# pt.savefig('ay(t)', )
-# pt.close()
-#
-# pt.title('Зависимость высоты от времени')
-# pt.xlabel('Время, с')
-# pt.ylabel('Высота, см')
-# pt.grid()
-# pt.plot([i[0] for i in y_t], [i[1] for i in y_t])
-# pt.savefig('y(t)', )
-# pt.close()
 funcs.save_graphs('graphs.pdf')
