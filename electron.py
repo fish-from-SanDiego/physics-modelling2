@@ -1,7 +1,3 @@
-import copy
-from math import log
-
-
 class Electron:
 
     def __init__(self, initial_velocity, condenser):
