@@ -1,6 +1,7 @@
 import matplotlib
 import matplotlib.pyplot as pt
 from matplotlib.backends.backend_pdf import PdfPages
+from pygame import gfxdraw
 
 matplotlib.use('pgf')
 dt = 10 ** (-12)
@@ -17,37 +18,39 @@ def evaluate(electron, condenser, time):
         electron.Y += electron.VelocityByY * dt
         electron.X += electron.VelocityByX * dt
         time += dt
-    return time
+    return time - dt
 
 
 def evaluate_all_values(electron, condenser, time):
-    y_x = []
-    vy_t = []
-    ay_t = []
-    y_t = []
+    t = []
+    x = []
+    y = []
+    v_y = []
+    a_y = []
     while electron.X < condenser.Length or electron.Y > 0:
-        y_x.append((electron.X * 100, electron.Y * 100))
-        vy_t.append((time, electron.VelocityByY))
+        y.append(electron.Y * 100)
+        x.append(electron.X * 100)
+        t.append(time)
         dvy = acceleration_by_y(electron, condenser)
-        ay_t.append((time, dvy))
-        y_t.append((time, electron.Y * 100))
+        a_y.append(dvy)
         electron.VelocityByY += dvy * dt
+        v_y.append(electron.VelocityByY)
         electron.Y += electron.VelocityByY * dt
         electron.X += electron.VelocityByX * dt
         time += dt
-    return [y_x, vy_t, ay_t, y_t]
+    return [t, x, y, v_y, a_y]
 
 
 def format_number(number):
     return '{:e}'.format(number).replace('e', '*10^').replace('+', "")
 
 
-def add_graph(values, title, xlabel, ylabel):
+def add_graph(x_values, y_values, title, x_label, y_label):
     pt.figure()
     pt.title(title)
-    pt.xlabel(xlabel)
-    pt.ylabel(ylabel)
-    pt.plot([i[0] for i in values], [i[1] for i in values])
+    pt.xlabel(x_label)
+    pt.ylabel(y_label)
+    pt.plot(x_values, y_values)
     pt.grid()
 
 
@@ -59,3 +62,8 @@ def save_graphs(filename):
     for fig in figs:
         p.savefig(fig)
     p.close()
+
+
+def draw_circle(surface, color, pos, radius):
+    gfxdraw.aacircle(surface, int(pos[0]), int(pos[1]), radius, color)
+    gfxdraw.filled_circle(surface, int(pos[0]), int(pos[1]), radius, color)
